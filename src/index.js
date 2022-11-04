@@ -1,15 +1,19 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const app = express();
-app.use(bodyParser.json());
+const routers = require('./routers');
+const { OK } = require('./utils/statusCode');
 
-const HTTP_OK_STATUS = 200;
+const app = express();
+
+app.use(bodyParser.json());
+app.use(routers);
+
 const PORT = '3000';
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (_request, response) => {
-  response.status(HTTP_OK_STATUS).send();
+  response.status(OK).send();
 });
 
 app.listen(PORT, () => {
