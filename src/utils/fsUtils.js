@@ -16,7 +16,6 @@ const fsUtils = {
             console.log(`Erro na leitura do arquivo: ${error}`);
         }
     },
-
 };
 
 module.exports = fsUtils;
