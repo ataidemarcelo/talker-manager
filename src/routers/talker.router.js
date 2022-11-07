@@ -1,7 +1,15 @@
 const express = require('express');
 
-const { findAll, findById } = require('../db/inMemory/talkerDB');
-const { OK, NOT_FOUND } = require('../utils/statusCode');
+const { findAll, findById, insert } = require('../db/inDisc/talkerDB');
+const {
+    validateRequiredFields,
+    validateToken,
+    isValidName,
+    isValidAge,
+    isValidWatchedAt,
+    isValidRate,
+} = require('../middlewares');
+const { OK, NOT_FOUND, CREATED } = require('../utils/statusCode');
 
 const router = express.Router();
 
@@ -22,6 +30,20 @@ router.get('/:id', async (request, response) => {
     }
 
     return response.status(OK).json(data);
+});
+
+router.post('/', 
+    validateToken,
+    validateRequiredFields,
+    isValidName,
+    isValidAge,
+    isValidWatchedAt,
+    isValidRate,
+async (request, response) => {
+    const talker = request.body;
+    const result = await insert(talker);
+
+    return response.status(CREATED).json(result);
 });
 
 module.exports = router;

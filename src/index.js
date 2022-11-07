@@ -17,5 +17,5 @@ app.get('/', (_request, response) => {
 });
 
 app.listen(PORT, () => {
-  console.log('Online!!!');
+  console.log(`Aplicação executando na porta ${PORT}`);
 });
