@@ -31,6 +31,21 @@ const fsUtils = {
             console.log(`Error na escrita do arquivo: ${erro}`);
         }
     },
+    updateData: async (fileName, id, data) => {
+        const oldData = await fsUtils.readData(fileName);
+        const updatedDataIndex = oldData.findIndex((item) => item.id === id);
+        oldData[updatedDataIndex] = { id, ...data };
+        
+        const updatedDataJSON = JSON.stringify(oldData);
+        const pathFile = `../${fileName}.json`;
+        try {
+            await fs.writeFile(path.resolve(__dirname, pathFile), updatedDataJSON);
+            console.log(`Atualizou registro com id: ${id}`);
+            return oldData[updatedDataIndex];
+        } catch (error) {
+            console.log(`Erro na escrita do arquivo: ${error}`);
+        }
+    },
 };
 
 module.exports = fsUtils;

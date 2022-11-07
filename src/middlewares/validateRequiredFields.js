@@ -24,12 +24,12 @@ const validateRequiredFields = (request, response, next) => {
     const mappedObject = new Map();
     mapper(request.body, mappedObject);
     for (let index = 0; index < requiredFields[pathNameUrl].length; index += 1) {
-        const requiredField = requiredFields[pathNameUrl][index];
-
-        if (!mappedObject.get(requiredField)) {
+        const field = requiredFields[pathNameUrl][index];
+        const value = mappedObject.get(field);
+        if (!value && value !== 0) {
             return response
                 .status(BAD_REQUEST)
-                .json({ message: `O campo "${requiredField}" é obrigatório` });
+                .json({ message: `O campo "${field}" é obrigatório` });
         }
     }
     return next();

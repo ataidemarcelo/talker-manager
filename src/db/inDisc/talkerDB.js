@@ -18,8 +18,15 @@ const insert = async (talker) => {
     return result;
 };
 
+const update = async (id, talker) => {
+    const result = await fsUtils.updateData(FILE_NAME, id, talker);
+    
+    return result;
+};
+
 module.exports = {
     findAll,
     findById,
     insert,
+    update,
 };

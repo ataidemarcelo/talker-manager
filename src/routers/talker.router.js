@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { findAll, findById, insert } = require('../db/inDisc/talkerDB');
+const { findAll, findById, insert, update } = require('../db/inDisc/talkerDB');
 const {
     validateRequiredFields,
     validateToken,
@@ -44,6 +44,22 @@ async (request, response) => {
     const result = await insert(talker);
 
     return response.status(CREATED).json(result);
+});
+
+router.put('/:id', 
+    validateToken,
+    validateRequiredFields,
+    isValidName,
+    isValidAge,
+    isValidWatchedAt,
+    isValidRate,
+async (request, response) => {
+    const { id } = request.params;
+    const talker = request.body;
+
+    const result = await update(Number(id), talker);
+    
+    return response.status(OK).json(result);
 });
 
 module.exports = router;
