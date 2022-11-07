@@ -58,6 +58,11 @@ const fsUtils = {
             console.log(`Erro na escrita do arquivo: ${error}`);
         }
     },
+    searchTerm: async (fileName, searchTerm) => {
+        const data = await fsUtils.readData(fileName);
+        const result = data.filter((currentData) => currentData.name.includes(searchTerm));
+        return result;
+    },
 };
 
 module.exports = fsUtils;

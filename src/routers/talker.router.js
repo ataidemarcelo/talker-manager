@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { findAll, findById, insert, update, remove } = require('../db/inDisc/talkerDB');
+const { findAll, findById, insert, update, remove, search } = require('../db/inDisc/talkerDB');
 const {
     validateRequiredFields,
     validateToken,
@@ -12,6 +12,14 @@ const {
 const { OK, NOT_FOUND, CREATED, NO_CONTENT } = require('../utils/statusCode');
 
 const router = express.Router();
+
+router.get('/search', validateToken, async (request, response) => {
+    const searchTerm = request.query.q;
+
+    const result = await search(searchTerm);
+
+    return response.status(200).json(result);
+});
 
 router.get('/', async (_request, response) => {
     const data = await findAll();

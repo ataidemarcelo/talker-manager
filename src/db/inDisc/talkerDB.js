@@ -30,10 +30,17 @@ const remove = async (id, talker) => {
     return result;
 };
 
+const search = async (searchTerm) => {
+    const result = await fsUtils.searchTerm(FILE_NAME, searchTerm);
+
+    return result;
+};
+
 module.exports = {
     findAll,
     findById,
     insert,
     update,
     remove,
+    search,
 };
