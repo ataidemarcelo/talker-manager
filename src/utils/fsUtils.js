@@ -46,6 +46,18 @@ const fsUtils = {
             console.log(`Erro na escrita do arquivo: ${error}`);
         }
     },
+    deleteData: async (fileName, id) => {
+        const oldData = await fsUtils.readData(fileName);
+        const updatedData = oldData.filter((currentData) => currentData.id !== id);
+        const updatedDataJSON = JSON.stringify(updatedData);
+        const pathFile = `../${fileName}.json`;
+        try {
+            await fs.writeFile(path.resolve(__dirname, pathFile), updatedDataJSON);
+            console.log(`Deletou o registro com id: ${id}`);
+        } catch (error) {
+            console.log(`Erro na escrita do arquivo: ${error}`);
+        }
+    },
 };
 
 module.exports = fsUtils;

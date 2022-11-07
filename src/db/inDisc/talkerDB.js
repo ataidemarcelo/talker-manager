@@ -20,6 +20,12 @@ const insert = async (talker) => {
 
 const update = async (id, talker) => {
     const result = await fsUtils.updateData(FILE_NAME, id, talker);
+
+    return result;
+};
+
+const remove = async (id, talker) => {
+    const result = await fsUtils.deleteData(FILE_NAME, id, talker);
     
     return result;
 };
@@ -29,4 +35,5 @@ module.exports = {
     findById,
     insert,
     update,
+    remove,
 };

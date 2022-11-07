@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { findAll, findById, insert, update } = require('../db/inDisc/talkerDB');
+const { findAll, findById, insert, update, remove } = require('../db/inDisc/talkerDB');
 const {
     validateRequiredFields,
     validateToken,
@@ -9,7 +9,7 @@ const {
     isValidWatchedAt,
     isValidRate,
 } = require('../middlewares');
-const { OK, NOT_FOUND, CREATED } = require('../utils/statusCode');
+const { OK, NOT_FOUND, CREATED, NO_CONTENT } = require('../utils/statusCode');
 
 const router = express.Router();
 
@@ -58,8 +58,16 @@ async (request, response) => {
     const talker = request.body;
 
     const result = await update(Number(id), talker);
-    
+
     return response.status(OK).json(result);
+});
+
+router.delete('/:id', validateToken, async (request, response) => {
+    const { id } = request.params;
+
+    await remove(Number(id));
+
+    return response.status(NO_CONTENT).end();
 });
 
 module.exports = router;
